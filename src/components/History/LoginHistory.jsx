@@ -69,14 +69,6 @@ const LoginHistory = () => {
 
   return (
     <Box sx={{ padding: '20px' }}>
-      <Typography
-        variant='h5'
-        fontWeight='bold'
-        marginBottom='20px'
-        color='#333'>
-        Login History
-      </Typography>
-
       <Timeline position='alternate'>
         {history &&
           history.map((item) => (
