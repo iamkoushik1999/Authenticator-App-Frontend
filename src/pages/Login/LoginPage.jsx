@@ -1,4 +1,4 @@
-import SignupForm from '../../components/SignUp/SignupForm';
+import LoginForm from '../../components/Login/LoginForm.jsx';
 import { Box } from '@mui/material';
 
 const SignUpPage = () => {
@@ -20,7 +20,7 @@ const SignUpPage = () => {
           width: '100%',
           padding: '20px',
         }}>
-        <SignupForm />
+        <LoginForm />
       </Box>
     </Box>
   );
