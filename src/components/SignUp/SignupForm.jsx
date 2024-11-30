@@ -8,11 +8,11 @@ import {
   IconButton,
   InputAdornment,
   CircularProgress,
-  Snackbar,
-  Alert,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const SignupForm = () => {
   const [email, setEmail] = useState('');
@@ -23,9 +23,6 @@ const SignupForm = () => {
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false); // Tracks if OTP was sent
   const [loading, setLoading] = useState(false); // Tracks loading state
-  const [error, setError] = useState(null); // Tracks error messages
-  const [successMessage, setSuccessMessage] = useState(''); // Tracks success messages
-  const [openSnackbar, setOpenSnackbar] = useState(false); // Snackbar state
 
   const navigate = useNavigate();
 
@@ -37,7 +34,6 @@ const SignupForm = () => {
   // Handle "Send OTP" API call
   const handleSendOtp = async () => {
     setLoading(true);
-    setError(null);
 
     try {
       const response = await fetch(
@@ -55,23 +51,31 @@ const SignupForm = () => {
 
       if (data.success) {
         setOtpSent(true); // OTP was sent successfully
-        setSuccessMessage(data.message);
-        setOpenSnackbar(true); // Open Snackbar for success message
+        Swal.fire({
+          title: 'OTP Generated',
+          text: data.message,
+          icon: 'success',
+        });
       } else {
-        setError(data.message || 'Failed to send OTP.');
+        toast.error(data.message || 'Failed to send OTP.', {
+          position: 'top-center',
+          duration: 3000,
+        });
       }
     } catch (err) {
-      setError('An error occurred while sending the OTP.', err);
+      console.log('An error occurred while sending the OTP.', err);
+      toast.error('An error occurred while sending the OTP.', {
+        position: 'top-center',
+        duration: 3000,
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle "Verify OTP" (Placeholder function for now)
   // Handle "Verify OTP" API call
   const handleVerifyOtp = async () => {
     setLoading(true); // Show loader
-    setError(null); // Reset error
 
     try {
       const response = await fetch(
@@ -92,8 +96,10 @@ const SignupForm = () => {
       const data = await response.json();
 
       if (data.success) {
-        setSuccessMessage(data.message);
-        setOpenSnackbar(true); // Show success notification
+        toast.success(data.message, {
+          position: 'top-center',
+          duration: 3000,
+        });
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
         setEmail('');
@@ -105,18 +111,20 @@ const SignupForm = () => {
         setOtpSent('');
         navigate('/');
       } else {
-        setError(data.message || 'Failed to verify OTP.');
+        toast.error(data.message || 'Failed to verify OTP.', {
+          position: 'top-center',
+          duration: 3000,
+        });
       }
     } catch (err) {
-      setError('An error occurred while verifying the OTP.', err);
+      console.log('An error occurred while verifying the OTP.', err);
+      toast.error('An error occurred while verifying the OTP.', {
+        position: 'top-center',
+        duration: 3000,
+      });
     } finally {
       setLoading(false); // Hide loader
     }
-  };
-
-  // Close Snackbar
-  const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
   };
 
   return (
@@ -248,27 +256,6 @@ const SignupForm = () => {
           'Send OTP'
         )}
       </Button>
-
-      {/* Error Message */}
-      {error && (
-        <Typography color='error' marginTop='10px'>
-          {error}
-        </Typography>
-      )}
-
-      {/* Snackbar for Success Messages */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity='success'
-          sx={{ width: '100%' }}>
-          {successMessage}
-        </Alert>
-      </Snackbar>
 
       {/* Login Link */}
       <Typography variant='body2' color='textSecondary' marginTop='20px'>
