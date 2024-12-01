@@ -32,7 +32,7 @@ const Header = () => {
         });
 
         // Navigate to login page after toast duration
-        setTimeout(() => navigate('/login'), 1000);
+        navigate('/login');
       }
     });
   };
@@ -47,22 +47,40 @@ const Header = () => {
         {/* App Name or Logo */}
         <Typography
           variant='h6'
-          sx={{ flexGrow: 1, fontWeight: 'bold', fontSize: '20px' }}>
+          onClick={() => navigate('/')}
+          sx={{
+            flexGrow: 1,
+            fontWeight: 'bold',
+            fontSize: '20px',
+            cursor: 'pointer',
+          }}>
           Authentication App
         </Typography>
 
         {/* Show Logout button only if token exists */}
         {token ? (
-          <Button
-            color='inherit'
-            onClick={handleLogout}
-            sx={{
-              textTransform: 'none',
-              fontWeight: 'bold',
-              fontSize: '16px',
-            }}>
-            Logout
-          </Button>
+          <>
+            <Button
+              color='inherit'
+              onClick={() => navigate('/authenticate')}
+              sx={{
+                textTransform: 'none',
+                fontWeight: 'bold',
+                fontSize: '16px',
+              }}>
+              2FA
+            </Button>
+            <Button
+              color='inherit'
+              onClick={handleLogout}
+              sx={{
+                textTransform: 'none',
+                fontWeight: 'bold',
+                fontSize: '16px',
+              }}>
+              Logout
+            </Button>
+          </>
         ) : (
           // Show Login and Sign Up buttons when user is not logged in
           <>
