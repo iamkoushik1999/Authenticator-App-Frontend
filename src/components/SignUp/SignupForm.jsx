@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 // React Router
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // React Hot Toast
 import toast from 'react-hot-toast';
 // Sweet Alert
@@ -260,13 +260,15 @@ const SignupForm = () => {
       <Typography variant='body2' color='textSecondary' marginTop='20px'>
         Already have an account?{' '}
         <Link
-          href='/login'
+          component={RouterLink}
+          to='/login'
           sx={{
             color: '#556cd6',
             fontWeight: 'bold',
             textDecoration: 'none',
             '&:hover': {
               textDecoration: 'underline',
+              cursor: 'pointer',
             },
           }}>
           Login

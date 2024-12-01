@@ -11,7 +11,7 @@ import {
   Radio,
 } from '@mui/material';
 // React Router
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // React Hot Toast
 import toast from 'react-hot-toast';
 // Sweet Alert
@@ -323,13 +323,15 @@ const LoginForm = () => {
       <Typography variant='body2' color='textSecondary' marginTop='20px'>
         Don&apos;t have an account?{' '}
         <Link
-          href='/signup'
+          component={RouterLink}
+          to='/signup'
           sx={{
             color: '#556cd6',
             fontWeight: 'bold',
             textDecoration: 'none',
             '&:hover': {
               textDecoration: 'underline',
+              cursor: 'pointer',
             },
           }}>
           Click Here
