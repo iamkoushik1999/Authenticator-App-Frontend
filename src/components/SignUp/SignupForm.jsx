@@ -10,8 +10,11 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+// React Router
 import { useNavigate } from 'react-router-dom';
+// React Hot Toast
 import toast from 'react-hot-toast';
+// Sweet Alert
 import Swal from 'sweetalert2';
 
 const SignupForm = () => {
@@ -32,12 +35,12 @@ const SignupForm = () => {
     setShowConfirmPassword(!showConfirmPassword);
 
   // Handle "Send OTP" API call
-  const handleSendOtp = async () => {
+  const handleSignupSendOtp = async () => {
     setLoading(true);
 
     try {
       const response = await fetch(
-        'http://localhost:5050/api/v1/auth/send-otp',
+        'http://localhost:5050/api/v1/auth/send-otp?auth=signup',
         {
           method: 'POST',
           headers: {
@@ -246,7 +249,7 @@ const SignupForm = () => {
             backgroundColor: '#4054b2',
           },
         }}
-        onClick={otpSent ? handleVerifyOtp : handleSendOtp}
+        onClick={otpSent ? handleVerifyOtp : handleSignupSendOtp}
         disabled={loading}>
         {loading ? (
           <CircularProgress size={24} sx={{ color: '#fff' }} />
