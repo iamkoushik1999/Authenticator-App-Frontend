@@ -16,6 +16,12 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 // Sweet Alert
 import Swal from 'sweetalert2';
+// API
+import {
+  SEND_LOGIN_OTP_URL,
+  VERIFY_CODE_URL,
+  VERIFY_OTP_URL,
+} from '../../api/auth';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -27,20 +33,18 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
 
+  // Handle "Verify Code" API call
   const handleLoginWithCode = async () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        'http://localhost:5050/api/v1/auth//verify-code',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, code }),
-        }
-      );
+      const response = await fetch(VERIFY_CODE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, code }),
+      });
 
       const data = await response.json();
 
@@ -75,16 +79,13 @@ const LoginForm = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        'http://localhost:5050/api/v1/auth/send-otp?auth=login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email }),
-        }
-      );
+      const response = await fetch(SEND_LOGIN_OTP_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
 
       const data = await response.json();
 
@@ -112,23 +113,21 @@ const LoginForm = () => {
     }
   };
 
+  // Handle "Verify OTP" API call
   const handleVerifyOtp = async () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        'http://localhost:5050/api/v1/auth/verify-otp',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email,
-            otp,
-          }),
-        }
-      );
+      const response = await fetch(VERIFY_OTP_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          otp,
+        }),
+      });
 
       const data = await response.json();
 

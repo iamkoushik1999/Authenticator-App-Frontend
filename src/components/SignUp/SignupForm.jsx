@@ -16,6 +16,8 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 // Sweet Alert
 import Swal from 'sweetalert2';
+// API
+import { SEND_SIGNUP_OTP_URL, VERIFY_OTP_URL } from '../../api/auth';
 
 const SignupForm = () => {
   const [email, setEmail] = useState('');
@@ -39,16 +41,13 @@ const SignupForm = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        'http://localhost:5050/api/v1/auth/send-otp?auth=signup',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password, confirmPassword }),
-        }
-      );
+      const response = await fetch(SEND_SIGNUP_OTP_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, confirmPassword }),
+      });
 
       const data = await response.json();
 
@@ -81,20 +80,17 @@ const SignupForm = () => {
     setLoading(true); // Show loader
 
     try {
-      const response = await fetch(
-        'http://localhost:5050/api/v1/auth/verify-otp',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email,
-            password,
-            otp,
-          }),
-        }
-      );
+      const response = await fetch(VERIFY_OTP_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          otp,
+        }),
+      });
 
       const data = await response.json();
 

@@ -11,6 +11,12 @@ import {
 import Swal from 'sweetalert2';
 // React Hot Toast
 import toast from 'react-hot-toast';
+// API
+import {
+  CODE_GENERATE_URL,
+  CODE_VERIFY_URL,
+  PROFILE_URL,
+} from '../../api/auth';
 
 const TwoFA = () => {
   const [isVerified, setIsVerified] = useState(false);
@@ -25,7 +31,7 @@ const TwoFA = () => {
     // Check the 2FA verification status
     const checkVerificationStatus = async () => {
       try {
-        const response = await fetch('http://localhost:5050/api/v1/auth/me', {
+        const response = await fetch(PROFILE_URL, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -50,17 +56,15 @@ const TwoFA = () => {
     checkVerificationStatus();
   }, []);
 
+  // Generate QR Code
   const handleGenerateQRCode = async () => {
     try {
-      const response = await fetch(
-        'http://localhost:5050/api/v1/code/generate',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await fetch(CODE_GENERATE_URL, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       const data = await response.json();
       if (data.success) {
@@ -75,9 +79,10 @@ const TwoFA = () => {
     }
   };
 
+  // Verify Code
   const handleVerifyCode = async () => {
     try {
-      const response = await fetch('http://localhost:5050/api/v1/code/verify', {
+      const response = await fetch(CODE_VERIFY_URL, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken}`,

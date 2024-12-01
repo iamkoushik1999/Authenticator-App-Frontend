@@ -7,6 +7,8 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import { Box, CircularProgress, Typography, Alert } from '@mui/material';
+// API
+import { GET_HISTORY_URL } from '../../api/auth';
 
 const LoginHistory = () => {
   const [history, setHistory] = useState([]);
@@ -24,14 +26,11 @@ const LoginHistory = () => {
           return;
         }
 
-        const response = await axios.get(
-          'http://localhost:5050/api/v1/history/get',
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`, // Add the token in the header
-            },
-          }
-        );
+        const response = await axios.get(GET_HISTORY_URL, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // Add the token in the header
+          },
+        });
 
         if (response.data) {
           setHistory(response.data.data); // Assuming `data.data` contains the array of login history
