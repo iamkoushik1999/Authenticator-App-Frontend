@@ -1,11 +1,12 @@
 // import React from 'react';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const token = localStorage.getItem('accessToken');
 
   // Handle logout action with SweetAlert2
@@ -47,7 +48,11 @@ const Header = () => {
         {/* App Name or Logo */}
         <Typography
           variant='h6'
-          onClick={() => navigate('/')}
+          onClick={() =>
+            location.pathname === '/dashboard'
+              ? navigate('/dashboard')
+              : navigate('/')
+          }
           sx={{
             flexGrow: 1,
             fontWeight: 'bold',
@@ -57,19 +62,10 @@ const Header = () => {
           Authentication App
         </Typography>
 
-        {/* Show Logout button only if token exists */}
+        {/* If user is logged in */}
         {token ? (
-          <>
-            <Button
-              color='inherit'
-              onClick={() => navigate('/authenticate')}
-              sx={{
-                textTransform: 'none',
-                fontWeight: 'bold',
-                fontSize: '16px',
-              }}>
-              2FA
-            </Button>
+          location.pathname === '/dashboard' ? (
+            // Only show Logout when on /dashboard
             <Button
               color='inherit'
               onClick={handleLogout}
@@ -80,7 +76,42 @@ const Header = () => {
               }}>
               Logout
             </Button>
-          </>
+          ) : (
+            // Show 2FA and Logout when not on /dashboard
+            <>
+              <Button
+                color='inherit'
+                onClick={() => navigate('/me')}
+                sx={{
+                  textTransform: 'none',
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                }}>
+                My Profile
+              </Button>
+              <Button
+                color='inherit'
+                onClick={() => navigate('/authenticate')}
+                sx={{
+                  textTransform: 'none',
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                }}>
+                2FA
+              </Button>
+              <hr />
+              <Button
+                color='inherit'
+                onClick={handleLogout}
+                sx={{
+                  textTransform: 'none',
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                }}>
+                Logout
+              </Button>
+            </>
+          )
         ) : (
           // Show Login and Sign Up buttons when user is not logged in
           <>
