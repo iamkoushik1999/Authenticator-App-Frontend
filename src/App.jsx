@@ -16,6 +16,10 @@ import LoginPage from './pages/Login/LoginPage.jsx';
 import HistoryPage from './pages/History/HistoryPage';
 // Authentication
 import AuthenticatePage from './pages/Authenticate/AuthenticatePage.jsx';
+// Admin
+import AdminAuth from './pages/Admin/Auth/AdminAuth.jsx';
+// Admin Dashboard
+import Dashboard from './pages/Admin/Dashboard/Dashboard.jsx';
 // React Hot Toast
 import { Toaster } from 'react-hot-toast';
 
@@ -39,9 +43,11 @@ const App = () => {
           <Route element={<Layout />}>
             <Route path='/signup' element={<SignUpPage />} />
             <Route path='/login' element={<LoginPage />} />
+            <Route path='/admin/login' element={<AdminAuth />} />
             <Route element={<PrivateRoute />}>
               <Route path='/' element={<HistoryPage />} />
               <Route path='/authenticate' element={<AuthenticatePage />} />
+              <Route path='/dashboard' element={<Dashboard />} />
             </Route>
             <Route path='*' element={<Navigate to='/' replace />} />
           </Route>
