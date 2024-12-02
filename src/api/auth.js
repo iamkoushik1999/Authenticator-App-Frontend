@@ -13,3 +13,6 @@ export const CODE_GENERATE_URL = `${BASE_URL}/code/generate`;
 export const CODE_VERIFY_URL = `${BASE_URL}/code/verify`;
 
 export const ADMIN_SIGNIN_URL = `${BASE_URL}/admin/login`;
+export const GET_USERS_URL = `${BASE_URL}/admin/users`;
+export const UPDATE_STATUS_URL = `${BASE_URL}/admin/status`;
+export const DELETE_USER_URL = `${BASE_URL}/admin/delete`;

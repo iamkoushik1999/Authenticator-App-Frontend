@@ -29,7 +29,8 @@ const App = () => {
       <div>
         {/* React Hot Toast Toaster */}
         <Toaster
-          position='top-right'
+          position='top-center'
+          duration={3000}
           toastOptions={{
             style: {
               background: '#333',

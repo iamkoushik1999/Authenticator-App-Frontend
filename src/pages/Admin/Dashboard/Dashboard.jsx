@@ -1,7 +1,6 @@
 // import React from 'react'
 
 import { Box } from '@mui/material';
-import Banner from '../../../components/Admin/Dashboard/Banner';
 import UserList from '../../../components/Admin/Dashboard/UserList';
 
 const Dashboard = () => {
@@ -14,7 +13,6 @@ const Dashboard = () => {
         minHeight: '70vh',
         paddingTop: 0,
       }}>
-      <Banner />
       <Box
         sx={{
           flex: 1,
