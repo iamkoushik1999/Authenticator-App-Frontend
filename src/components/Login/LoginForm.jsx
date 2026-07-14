@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import {
-  Box,
   TextField,
   Button,
   Typography,
   Link,
   CircularProgress,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
+  ToggleButtonGroup,
+  ToggleButton,
+  Paper,
+  Avatar,
 } from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 // React Router
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // React Hot Toast
@@ -56,7 +57,7 @@ const LoginForm = () => {
         });
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
-        navigate('/');
+        navigate('/history');
       } else {
         toast.error(data.message || 'Failed to verify 2FA.', {
           position: 'top-center',
@@ -141,7 +142,7 @@ const LoginForm = () => {
         setEmail('');
         setOtp('');
         setOtpSent('');
-        navigate('/');
+        navigate('/history');
       } else {
         toast.error(data.message || 'Failed to verify OTP.', {
           position: 'top-center',
@@ -168,44 +169,50 @@ const LoginForm = () => {
   };
 
   return (
-    <Box
+    <Paper
+      elevation={3}
       sx={{
-        width: '400px',
-        padding: '30px',
-        backgroundColor: '#ffffff',
-        borderRadius: '12px',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+        width: '420px',
+        maxWidth: '100%',
+        padding: '36px',
         textAlign: 'center',
       }}>
-      <Typography
-        variant='h5'
-        fontWeight='bold'
-        marginBottom='20px'
-        color='#333'>
-        Login
+      <Avatar
+        sx={{
+          mx: 'auto',
+          mb: 2,
+          width: 56,
+          height: 56,
+          backgroundImage: 'linear-gradient(135deg, #4F46E5 0%, #6D28D9 100%)',
+        }}>
+        <LockOutlinedIcon />
+      </Avatar>
+
+      <Typography variant='h5' fontWeight={800} marginBottom='6px'>
+        Welcome back
+      </Typography>
+      <Typography variant='body2' color='text.secondary' marginBottom='24px'>
+        Log in with a one-time passcode or your authenticator app.
       </Typography>
 
-      {/* Radio Group for Login Method */}
-      <RadioGroup
+      {/* Login Method Switch */}
+      <ToggleButtonGroup
         value={loginMethod}
-        onChange={(e) => setLoginMethod(e.target.value)}
+        exclusive
+        onChange={(e, value) => value && setLoginMethod(value)}
+        fullWidth
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
           marginBottom: '20px',
+          '& .MuiToggleButton-root': {
+            textTransform: 'none',
+            fontWeight: 700,
+            borderRadius: '10px !important',
+            py: 1,
+          },
         }}>
-        <FormControlLabel
-          value='otp'
-          control={<Radio />}
-          label='Login with OTP'
-        />
-        <FormControlLabel
-          value='2fa'
-          control={<Radio />}
-          label='Login with 2FA'
-        />
-      </RadioGroup>
+        <ToggleButton value='otp'>Login with OTP</ToggleButton>
+        <ToggleButton value='2fa'>Login with 2FA</ToggleButton>
+      </ToggleButtonGroup>
 
       {/* Email Field */}
       <TextField
@@ -216,11 +223,6 @@ const LoginForm = () => {
         type='email'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            borderRadius: '8px',
-          },
-        }}
       />
 
       {/* Conditional Fields Based on Login Method */}
@@ -236,11 +238,6 @@ const LoginForm = () => {
               type='text'
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
-                },
-              }}
             />
           )}
 
@@ -248,19 +245,8 @@ const LoginForm = () => {
           <Button
             variant='contained'
             fullWidth
-            sx={{
-              marginTop: '20px',
-              padding: '12px',
-              fontSize: '16px',
-              fontWeight: 'bold',
-              borderRadius: '8px',
-              backgroundColor: '#556cd6',
-              color: '#ffffff',
-              transition: 'all 0.3s',
-              '&:hover': {
-                backgroundColor: '#4054b2',
-              },
-            }}
+            size='large'
+            sx={{ marginTop: '16px' }}
             onClick={otpSent ? handleVerifyOtp : handleLoginSendOtp}
             disabled={loading}>
             {loading ? (
@@ -277,37 +263,21 @@ const LoginForm = () => {
       {loginMethod === '2fa' && (
         <>
           <TextField
-            label='Code'
+            label='6-digit Code'
             variant='outlined'
             fullWidth
             margin='normal'
             type='text'
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: '8px',
-              },
-            }}
           />
 
           {/* Login Button */}
           <Button
             variant='contained'
             fullWidth
-            sx={{
-              marginTop: '20px',
-              padding: '12px',
-              fontSize: '16px',
-              fontWeight: 'bold',
-              borderRadius: '8px',
-              backgroundColor: '#556cd6',
-              color: '#ffffff',
-              transition: 'all 0.3s',
-              '&:hover': {
-                backgroundColor: '#4054b2',
-              },
-            }}
+            size='large'
+            sx={{ marginTop: '16px' }}
             onClick={handleLogin}
             disabled={loading}>
             {loading ? (
@@ -320,24 +290,24 @@ const LoginForm = () => {
       )}
 
       {/* Signup Link */}
-      <Typography variant='body2' color='textSecondary' marginTop='20px'>
+      <Typography variant='body2' color='text.secondary' marginTop='24px'>
         Don&apos;t have an account?{' '}
         <Link
           component={RouterLink}
           to='/signup'
           sx={{
-            color: '#556cd6',
-            fontWeight: 'bold',
+            color: 'primary.main',
+            fontWeight: 700,
             textDecoration: 'none',
             '&:hover': {
               textDecoration: 'underline',
               cursor: 'pointer',
             },
           }}>
-          Click Here
+          Sign up
         </Link>
       </Typography>
-    </Box>
+    </Paper>
   );
 };
 

@@ -1,12 +1,17 @@
 // import React from 'react'
 
-import Banner from '../../components/Authenticate/Banner';
+import QrCode2RoundedIcon from '@mui/icons-material/QrCode2Rounded';
+import PageBanner from '../../components/Common/PageBanner';
 import TwoFA from '../../components/Authenticate/TwoFA';
 
 const AuthenticatePage = () => {
   return (
     <div>
-      <Banner />
+      <PageBanner
+        icon={QrCode2RoundedIcon}
+        title='Authenticate Yourself'
+        subtitle='Link an authenticator app for faster, passwordless-friendly logins.'
+      />
       <TwoFA />
     </div>
   );

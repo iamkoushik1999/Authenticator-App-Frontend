@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import {
-  Box,
   TextField,
   Button,
   Typography,
   IconButton,
   InputAdornment,
   CircularProgress,
+  Paper,
+  Avatar,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import AdminPanelSettingsRoundedIcon from '@mui/icons-material/AdminPanelSettingsRounded';
 // React Router
 import { useNavigate } from 'react-router-dom';
 // React Hot Toast
@@ -74,21 +76,30 @@ const AdminSignIn = () => {
   };
 
   return (
-    <Box
+    <Paper
+      elevation={3}
       sx={{
-        width: '400px',
-        padding: '30px',
-        backgroundColor: '#ffffff',
-        borderRadius: '12px',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+        width: '420px',
+        maxWidth: '100%',
+        padding: '36px',
         textAlign: 'center',
       }}>
-      <Typography
-        variant='h5'
-        fontWeight='bold'
-        marginBottom='20px'
-        color='#333'>
+      <Avatar
+        sx={{
+          mx: 'auto',
+          mb: 2,
+          width: 56,
+          height: 56,
+          backgroundImage: 'linear-gradient(135deg, #1E293B 0%, #4338CA 100%)',
+        }}>
+        <AdminPanelSettingsRoundedIcon />
+      </Avatar>
+
+      <Typography variant='h5' fontWeight={800} marginBottom='6px'>
         Admin Sign In
+      </Typography>
+      <Typography variant='body2' color='text.secondary' marginBottom='24px'>
+        Manage users, verification status, and access.
       </Typography>
 
       {/* Email Field */}
@@ -100,11 +111,6 @@ const AdminSignIn = () => {
         type='email'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            borderRadius: '8px',
-          },
-        }}
       />
 
       {/* Password Field */}
@@ -125,30 +131,14 @@ const AdminSignIn = () => {
             </InputAdornment>
           ),
         }}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            borderRadius: '8px',
-          },
-        }}
       />
 
       {/* Sign In */}
       <Button
         variant='contained'
         fullWidth
-        sx={{
-          marginTop: '20px',
-          padding: '12px',
-          fontSize: '16px',
-          fontWeight: 'bold',
-          borderRadius: '8px',
-          backgroundColor: '#556cd6',
-          color: '#ffffff',
-          transition: 'all 0.3s',
-          '&:hover': {
-            backgroundColor: '#4054b2',
-          },
-        }}
+        size='large'
+        sx={{ marginTop: '16px' }}
         onClick={handleSignIn}
         disabled={loading}>
         {loading ? (
@@ -157,7 +147,7 @@ const AdminSignIn = () => {
           'Sign In'
         )}
       </Button>
-    </Box>
+    </Paper>
   );
 };
 

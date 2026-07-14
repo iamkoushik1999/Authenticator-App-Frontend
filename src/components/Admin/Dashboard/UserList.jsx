@@ -12,8 +12,10 @@ import {
   Button,
   CircularProgress,
   Box,
+  Container,
   Typography,
   Chip,
+  Avatar,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 // Sweet Alert
@@ -155,7 +157,7 @@ const UserList = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '100vh',
+          minHeight: '40vh',
         }}>
         <CircularProgress />
       </Box>
@@ -169,7 +171,7 @@ const UserList = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '100vh',
+          minHeight: '40vh',
         }}>
         <Typography variant='h6' color='error'>
           {error}
@@ -179,73 +181,97 @@ const UserList = () => {
   }
 
   return (
-    <TableContainer
-      component={Paper}
-      sx={{ marginTop: 4, maxWidth: '90%', margin: 'auto' }}>
-      <Table>
-        <TableHead>
-          <TableRow sx={{ backgroundColor: '#1976d2' }}>
-            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-              Email
-            </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-              Role
-            </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-              OTP Status
-            </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-              2FA Status
-            </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-              Account Created At
-            </TableCell>
-            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-              Actions
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((user) => (
-            <TableRow key={user._id}>
-              <TableCell>{user.email}</TableCell>
-              <TableCell style={{ textTransform: 'capitalize' }}>
-              <Chip color="primary" label={user.role} />
+    <Container maxWidth='lg' sx={{ py: 4 }}>
+      <TableContainer component={Paper} elevation={2}>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ backgroundColor: '#EEF0FF' }}>
+              <TableCell sx={{ fontWeight: 800, color: '#3730A3' }}>
+                User
               </TableCell>
-              <TableCell>
-                <Switch
-                  checked={user.otpVerified}
-                  onChange={() =>
-                    handleStatusToggle(
-                      user._id,
-                      'otpVerified',
-                      user.otpVerified
-                    )
-                  }
-                />
+              <TableCell sx={{ fontWeight: 800, color: '#3730A3' }}>
+                Role
               </TableCell>
-              <TableCell>
-                <Switch
-                  checked={user.isVerified}
-                  onChange={() =>
-                    handleStatusToggle(user._id, 'isVerified', user.isVerified)
-                  }
-                />
+              <TableCell sx={{ fontWeight: 800, color: '#3730A3' }}>
+                OTP Status
               </TableCell>
-              <TableCell>{new Date(user.createdAt).toLocaleString()}</TableCell>
-              <TableCell>
-                <Button
-                  variant='contained'
-                  color='error'
-                  onClick={() => handleDeleteUser(user._id)}>
-                  <DeleteIcon />
-                </Button>
+              <TableCell sx={{ fontWeight: 800, color: '#3730A3' }}>
+                2FA Status
+              </TableCell>
+              <TableCell sx={{ fontWeight: 800, color: '#3730A3' }}>
+                Account Created At
+              </TableCell>
+              <TableCell sx={{ fontWeight: 800, color: '#3730A3' }}>
+                Actions
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {users.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={6} sx={{ textAlign: 'center', py: 5 }}>
+                  <Typography color='text.secondary'>
+                    No users have signed up yet.
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            )}
+            {users.map((user) => (
+              <TableRow key={user._id} hover>
+                <TableCell>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Avatar
+                      sx={{
+                        width: 32,
+                        height: 32,
+                        fontSize: 14,
+                        backgroundImage:
+                          'linear-gradient(135deg, #4F46E5 0%, #6D28D9 100%)',
+                      }}>
+                      {user.email?.[0]?.toUpperCase()}
+                    </Avatar>
+                    {user.email}
+                  </Box>
+                </TableCell>
+                <TableCell style={{ textTransform: 'capitalize' }}>
+                  <Chip color='primary' label={user.role} size='small' />
+                </TableCell>
+                <TableCell>
+                  <Switch
+                    checked={user.otpVerified}
+                    onChange={() =>
+                      handleStatusToggle(
+                        user._id,
+                        'otpVerified',
+                        user.otpVerified
+                      )
+                    }
+                  />
+                </TableCell>
+                <TableCell>
+                  <Switch
+                    checked={user.isVerified}
+                    onChange={() =>
+                      handleStatusToggle(user._id, 'isVerified', user.isVerified)
+                    }
+                  />
+                </TableCell>
+                <TableCell>{new Date(user.createdAt).toLocaleString()}</TableCell>
+                <TableCell>
+                  <Button
+                    variant='contained'
+                    color='error'
+                    size='small'
+                    onClick={() => handleDeleteUser(user._id)}>
+                    <DeleteIcon fontSize='small' />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 };
 

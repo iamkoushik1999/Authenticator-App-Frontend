@@ -6,22 +6,14 @@ const SignUpPage = () => {
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '70vh',
-        paddingTop: 0,
+        minHeight: 'calc(100vh - 140px)',
+        padding: '40px 20px',
+        backgroundImage:
+          'radial-gradient(circle at 15% 15%, rgba(79,70,229,0.08), transparent 40%), radial-gradient(circle at 85% 85%, rgba(20,184,166,0.10), transparent 40%)',
       }}>
-      <Box
-        sx={{
-          flex: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          padding: '20px',
-        }}>
-        <SignupForm />
-      </Box>
+      <SignupForm />
     </Box>
   );
 };

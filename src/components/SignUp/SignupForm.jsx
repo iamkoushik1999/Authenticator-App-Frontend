@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  Box,
   TextField,
   Button,
   Typography,
@@ -8,8 +7,11 @@ import {
   IconButton,
   InputAdornment,
   CircularProgress,
+  Paper,
+  Avatar,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded';
 // React Router
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // React Hot Toast
@@ -108,7 +110,7 @@ const SignupForm = () => {
         setShowConfirmPassword(false);
         setOtp('');
         setOtpSent('');
-        navigate('/');
+        navigate('/history');
       } else {
         toast.error(data.message || 'Failed to verify OTP.', {
           position: 'top-center',
@@ -127,21 +129,30 @@ const SignupForm = () => {
   };
 
   return (
-    <Box
+    <Paper
+      elevation={3}
       sx={{
-        width: '400px',
-        padding: '30px',
-        backgroundColor: '#ffffff',
-        borderRadius: '12px',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+        width: '420px',
+        maxWidth: '100%',
+        padding: '36px',
         textAlign: 'center',
       }}>
-      <Typography
-        variant='h5'
-        fontWeight='bold'
-        marginBottom='20px'
-        color='#333'>
-        Sign Up
+      <Avatar
+        sx={{
+          mx: 'auto',
+          mb: 2,
+          width: 56,
+          height: 56,
+          backgroundImage: 'linear-gradient(135deg, #4F46E5 0%, #6D28D9 100%)',
+        }}>
+        <PersonAddAltRoundedIcon />
+      </Avatar>
+
+      <Typography variant='h5' fontWeight={800} marginBottom='6px'>
+        Create your account
+      </Typography>
+      <Typography variant='body2' color='text.secondary' marginBottom='24px'>
+        We&apos;ll send you a one-time code to verify your email.
       </Typography>
 
       {/* Email Field */}
@@ -153,11 +164,6 @@ const SignupForm = () => {
         type='email'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            borderRadius: '8px',
-          },
-        }}
       />
 
       {/* Password Field */}
@@ -177,11 +183,6 @@ const SignupForm = () => {
               </IconButton>
             </InputAdornment>
           ),
-        }}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            borderRadius: '8px',
-          },
         }}
       />
 
@@ -203,11 +204,6 @@ const SignupForm = () => {
             </InputAdornment>
           ),
         }}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            borderRadius: '8px',
-          },
-        }}
       />
 
       {/* Conditional OTP Input */}
@@ -220,11 +216,6 @@ const SignupForm = () => {
           type='text'
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '8px',
-            },
-          }}
         />
       )}
 
@@ -232,19 +223,8 @@ const SignupForm = () => {
       <Button
         variant='contained'
         fullWidth
-        sx={{
-          marginTop: '20px',
-          padding: '12px',
-          fontSize: '16px',
-          fontWeight: 'bold',
-          borderRadius: '8px',
-          backgroundColor: '#556cd6',
-          color: '#ffffff',
-          transition: 'all 0.3s',
-          '&:hover': {
-            backgroundColor: '#4054b2',
-          },
-        }}
+        size='large'
+        sx={{ marginTop: '16px' }}
         onClick={otpSent ? handleVerifyOtp : handleSignupSendOtp}
         disabled={loading}>
         {loading ? (
@@ -257,14 +237,14 @@ const SignupForm = () => {
       </Button>
 
       {/* Login Link */}
-      <Typography variant='body2' color='textSecondary' marginTop='20px'>
+      <Typography variant='body2' color='text.secondary' marginTop='24px'>
         Already have an account?{' '}
         <Link
           component={RouterLink}
           to='/login'
           sx={{
-            color: '#556cd6',
-            fontWeight: 'bold',
+            color: 'primary.main',
+            fontWeight: 700,
             textDecoration: 'none',
             '&:hover': {
               textDecoration: 'underline',
@@ -274,7 +254,7 @@ const SignupForm = () => {
           Login
         </Link>
       </Typography>
-    </Box>
+    </Paper>
   );
 };
 

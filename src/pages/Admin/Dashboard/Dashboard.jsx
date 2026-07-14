@@ -1,30 +1,19 @@
 // import React from 'react'
 
-import { Box } from '@mui/material';
+import AdminPanelSettingsRoundedIcon from '@mui/icons-material/AdminPanelSettingsRounded';
+import PageBanner from '../../../components/Common/PageBanner';
 import UserList from '../../../components/Admin/Dashboard/UserList';
 
 const Dashboard = () => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        minHeight: '70vh',
-        paddingTop: 0,
-      }}>
-      <Box
-        sx={{
-          flex: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          padding: '20px',
-        }}>
-        <UserList />
-      </Box>
-    </Box>
+    <div>
+      <PageBanner
+        icon={AdminPanelSettingsRoundedIcon}
+        title='Admin Dashboard'
+        subtitle='Manage registered users and their verification status.'
+      />
+      <UserList />
+    </div>
   );
 };
 

@@ -1,22 +1,34 @@
 // import React from 'react';
-import { Box, Typography, Link, IconButton } from '@mui/material';
+import { Box, Typography, Link, Stack } from '@mui/material';
+import VerifiedUserRoundedIcon from '@mui/icons-material/VerifiedUserRounded';
 
 const Footer = () => {
   return (
     <Box
       component='footer'
       sx={{
-        backgroundColor: '#1976d2',
+        backgroundImage: 'linear-gradient(90deg, #4338CA 0%, #6D28D9 100%)',
         color: '#fff',
-        padding: '20px 10px',
+        padding: '32px 20px 24px',
         textAlign: 'center',
       }}>
-      {/* Copyright Information */}
+      <Stack
+        direction='row'
+        alignItems='center'
+        justifyContent='center'
+        spacing={1}
+        sx={{ mb: 1 }}>
+        <VerifiedUserRoundedIcon sx={{ fontSize: 22 }} />
+        <Typography variant='subtitle1' fontWeight={800}>
+          Authenticator App
+        </Typography>
+      </Stack>
+
       <Typography
         variant='body2'
-        sx={{ fontSize: '14px', marginBottom: '10px' }}>
-        &copy; {new Date().getFullYear()} Authentication App. All rights
-        reserved.
+        sx={{ fontSize: '13px', opacity: 0.85, marginBottom: '16px' }}>
+        A demo project showcasing OTP &amp; TOTP 2FA authentication flows.
+        Built for learning &mdash; not for production use.
       </Typography>
 
       {/* Navigation Links */}
@@ -24,82 +36,40 @@ const Footer = () => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          gap: '15px',
-          marginBottom: '10px',
+          flexWrap: 'wrap',
+          gap: '18px',
+          marginBottom: '16px',
         }}>
         <Link
           href='/'
           underline='hover'
           sx={{ color: '#fff', fontSize: '14px' }}>
-          About Us
+          About
         </Link>
         <Link
-          href='/'
+          href='/signup'
           underline='hover'
           sx={{ color: '#fff', fontSize: '14px' }}>
-          Contact
+          Sign Up
         </Link>
         <Link
-          href='/'
+          href='/login'
           underline='hover'
           sx={{ color: '#fff', fontSize: '14px' }}>
-          Privacy Policy
+          Login
         </Link>
         <Link
-          href='/'
+          href='/admin/login'
           underline='hover'
           sx={{ color: '#fff', fontSize: '14px' }}>
-          Terms of Service
+          Admin
         </Link>
       </Box>
 
-      {/* Social Media Icons */}
-      <Box>
-        <IconButton
-          aria-label='Twilio Authy Authenticator'
-          href='https://play.google.com/store/apps/details?id=com.authy.authy&hl=en_IN'
-          target='_blank'
-          sx={{ color: '#fff' }}>
-          <img
-            src='https://static-00.iconduck.com/assets.00/authy-icon-2048x2048-32v2x8k3.png'
-            alt='Twilio Authy Authenticator'
-            style={{ width: '30px', height: '30px' }} // Adjusted size
-          />
-        </IconButton>
-        <IconButton
-          aria-label='Google Authenticator'
-          href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en_IN'
-          target='_blank'
-          sx={{ color: '#fff' }}>
-          <img
-            src='https://play-lh.googleusercontent.com/NntMALIH4odanPPYSqUOXsX8zy_giiK2olJiqkcxwFIOOspVrhMi9Miv6LYdRnKIg-3R=w240-h480-rw'
-            alt='Google Authenticator'
-            style={{ width: '30px', height: '30px' }} // Adjusted size
-          />
-        </IconButton>
-        <IconButton
-          aria-label='Microsoft Authenticator'
-          href='https://play.google.com/store/apps/details?id=com.azure.authenticator&hl=en_IN'
-          target='_blank'
-          sx={{ color: '#fff' }}>
-          <img
-            src='https://play-lh.googleusercontent.com/_1CV99jklLbXuun-6E7eCPR-sKKeZc602rhw_QHZz-qm7xrPdgWsJVc7NtFkkliI8No=w240-h480-rw'
-            alt='Microsoft Authenticator'
-            style={{ width: '30px', height: '30px' }} // Adjusted size
-          />
-        </IconButton>
-        <IconButton
-          aria-label='2FA Authenticator (2FAS)'
-          href='https://apps.apple.com/us/app/2fa-authenticator-2fas/id1217793794'
-          target='_blank'
-          sx={{ color: '#fff' }}>
-          <img
-            src='https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/24/0c/34/240c34fe-27d7-3062-c256-69750b42f093/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/350x350.png?'
-            alt='2FA Authenticator (2FAS)'
-            style={{ width: '30px', height: '30px' }} // Adjusted size
-          />
-        </IconButton>
-      </Box>
+      <Typography variant='caption' sx={{ display: 'block', opacity: 0.75 }}>
+        &copy; {new Date().getFullYear()} Authenticator App. All rights
+        reserved.
+      </Typography>
     </Box>
   );
 };

@@ -1,13 +1,22 @@
 // import React from 'react';
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+import VerifiedUserRoundedIcon from '@mui/icons-material/VerifiedUserRounded';
 import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
+
+const navButtonSx = {
+  textTransform: 'none',
+  fontWeight: 700,
+  fontSize: '15px',
+  borderRadius: '8px',
+};
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem('accessToken');
+  const isAdminArea = location.pathname === '/dashboard';
 
   // Handle logout action with SweetAlert2
   const handleLogout = () => {
@@ -17,7 +26,7 @@ const Header = () => {
       text: 'You will be logged out from your account.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
+      confirmButtonColor: '#4F46E5',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Logout',
     }).then((result) => {
@@ -32,111 +41,101 @@ const Header = () => {
           duration: 3000,
         });
 
-        // Navigate to login page after toast duration
-        navigate('/login');
+        // Navigate to home page after toast duration
+        navigate('/');
       }
     });
   };
 
   return (
-    <AppBar
-      position='static'
-      sx={{
-        backgroundColor: '#1976d2',
-      }}>
-      <Toolbar>
+    <AppBar position='static' elevation={0}>
+      <Toolbar sx={{ py: 1, flexWrap: 'wrap', gap: 1 }}>
         {/* App Name or Logo */}
-        <Typography
-          variant='h6'
-          onClick={() =>
-            location.pathname === '/dashboard'
-              ? navigate('/dashboard')
-              : navigate('/')
-          }
+        <Box
+          onClick={() => navigate('/')}
           sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
             flexGrow: 1,
-            fontWeight: 'bold',
-            fontSize: '20px',
             cursor: 'pointer',
           }}>
-          Authentication App
-        </Typography>
+          <VerifiedUserRoundedIcon sx={{ fontSize: 28 }} />
+          <Typography
+            variant='h6'
+            sx={{
+              fontWeight: 800,
+              fontSize: '20px',
+              letterSpacing: '0.2px',
+            }}>
+            Authenticator
+          </Typography>
+        </Box>
 
-        {/* If user is logged in */}
-        {token ? (
-          location.pathname === '/dashboard' ? (
-            // Only show Logout when on /dashboard
-            <Button
-              color='inherit'
-              onClick={handleLogout}
-              sx={{
-                textTransform: 'none',
-                fontWeight: 'bold',
-                fontSize: '16px',
-              }}>
-              Logout
-            </Button>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+          {token ? (
+            isAdminArea ? (
+              // Only show Logout when on /dashboard
+              <Button color='inherit' onClick={handleLogout} sx={navButtonSx}>
+                Logout
+              </Button>
+            ) : (
+              // Show Home, History, 2FA and Logout for a logged-in user
+              <>
+                <Button
+                  color='inherit'
+                  onClick={() => navigate('/')}
+                  sx={navButtonSx}>
+                  Home
+                </Button>
+                <Button
+                  color='inherit'
+                  onClick={() => navigate('/history')}
+                  sx={navButtonSx}>
+                  History
+                </Button>
+                <Button
+                  color='inherit'
+                  onClick={() => navigate('/authenticate')}
+                  sx={navButtonSx}>
+                  2FA
+                </Button>
+                <Button
+                  color='inherit'
+                  onClick={handleLogout}
+                  sx={{
+                    ...navButtonSx,
+                    ml: 0.5,
+                    border: '1px solid rgba(255,255,255,0.5)',
+                  }}>
+                  Logout
+                </Button>
+              </>
+            )
           ) : (
-            // Show 2FA and Logout when not on /dashboard
+            // Show Login and Sign Up buttons when user is not logged in
             <>
               <Button
                 color='inherit'
-                onClick={() => navigate('/me')}
-                sx={{
-                  textTransform: 'none',
-                  fontWeight: 'bold',
-                  fontSize: '16px',
-                }}>
-                My Profile
+                onClick={() => navigate('/login')}
+                sx={navButtonSx}>
+                Login
               </Button>
               <Button
-                color='inherit'
-                onClick={() => navigate('/authenticate')}
+                variant='contained'
+                onClick={() => navigate('/signup')}
                 sx={{
-                  textTransform: 'none',
-                  fontWeight: 'bold',
-                  fontSize: '16px',
+                  ...navButtonSx,
+                  backgroundImage: 'none',
+                  backgroundColor: '#ffffff',
+                  color: '#4338CA',
+                  '&:hover': { backgroundImage: 'none', backgroundColor: '#EEF0FF' },
                 }}>
-                2FA
-              </Button>
-              <hr />
-              <Button
-                color='inherit'
-                onClick={handleLogout}
-                sx={{
-                  textTransform: 'none',
-                  fontWeight: 'bold',
-                  fontSize: '16px',
-                }}>
-                Logout
+                Sign Up
               </Button>
             </>
-          )
-        ) : (
-          // Show Login and Sign Up buttons when user is not logged in
-          <>
-            <Button
-              color='inherit'
-              onClick={() => navigate('/login')}
-              sx={{
-                textTransform: 'none',
-                fontWeight: 'bold',
-                fontSize: '16px',
-              }}>
-              Login
-            </Button>
-            <Button
-              color='inherit'
-              onClick={() => navigate('/signup')}
-              sx={{
-                textTransform: 'none',
-                fontWeight: 'bold',
-                fontSize: '16px',
-              }}>
-              Sign Up
-            </Button>
-          </>
-        )}
+          )}
+        </Box>
       </Toolbar>
     </AppBar>
   );

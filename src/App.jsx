@@ -9,10 +9,12 @@ import {
 import Layout from './components/Common/Layout.jsx';
 // Private Route
 import PrivateRoute from './routes/PrivateRoute';
+// Home Page
+import HomePage from './pages/Home/HomePage.jsx';
 // Authentication Pages
 import SignUpPage from './pages/SignUp/SignUpPage';
 import LoginPage from './pages/Login/LoginPage.jsx';
-// Home Page
+// Login History
 import HistoryPage from './pages/History/HistoryPage';
 // Authentication
 import AuthenticatePage from './pages/Authenticate/AuthenticatePage.jsx';
@@ -42,11 +44,12 @@ const App = () => {
         {/* Application Routes */}
         <Routes>
           <Route element={<Layout />}>
+            <Route path='/' element={<HomePage />} />
             <Route path='/signup' element={<SignUpPage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/admin/login' element={<AdminAuth />} />
             <Route element={<PrivateRoute />}>
-              <Route path='/' element={<HistoryPage />} />
+              <Route path='/history' element={<HistoryPage />} />
               <Route path='/authenticate' element={<AuthenticatePage />} />
               <Route path='/dashboard' element={<Dashboard />} />
             </Route>

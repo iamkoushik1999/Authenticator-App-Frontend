@@ -1,24 +1,23 @@
 import { Outlet } from 'react-router-dom';
+import { Box } from '@mui/material';
 import Header from './Header';
 import Footer from './Footer';
 
 const Layout = () => {
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
+        backgroundColor: 'background.default',
       }}>
       <Header />
-      <div
-        style={{
-          flex: 1, // This will make the content area take up all available space
-        }}>
+      <Box component='main' sx={{ flex: 1 }}>
         <Outlet /> {/* This will render the page content */}
-      </div>
+      </Box>
       <Footer />
-    </div>
+    </Box>
   );
 };
 
