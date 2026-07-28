@@ -168,15 +168,39 @@ const LoginForm = () => {
     }
   };
 
+  // Fill demo credentials for quick testing
+  const handleAutofill = () => {
+    setEmail('test@test.com');
+  };
+
   return (
     <Paper
       elevation={3}
       sx={{
+        position: 'relative',
         width: '420px',
         maxWidth: '100%',
         padding: '36px',
         textAlign: 'center',
       }}>
+      <Button
+        onClick={handleAutofill}
+        size='small'
+        sx={{
+          position: 'absolute',
+          top: 6,
+          right: 6,
+          minWidth: 'auto',
+          padding: '2px 6px',
+          fontSize: '0.65rem',
+          textTransform: 'none',
+          color: 'text.disabled',
+          opacity: 0.5,
+          '&:hover': { opacity: 1 },
+        }}>
+        Autofill
+      </Button>
+
       <Avatar
         sx={{
           mx: 'auto',
